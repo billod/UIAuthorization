@@ -1,0 +1,58 @@
+﻿<Window x:Class="UIAuthorization.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"        
+        xmlns:a="clr-namespace:UIAuthorization"
+        xmlns:b="clr-namespace:UIAuthorization.Behaviors"
+        xmlns:op="clr-namespace:UIAuthorization.Primitives"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        ResizeMode="NoResize"
+        Title="UI Element Authorization" Height="350" Width="500">
+    <!--给UI元素附加行为-->
+    <i:Interaction.Behaviors>
+        <b:CloseWindowBehavior ClosedCommand="{Binding ClosedCommand}" ClosingCommand="{Binding ClosingCommand}" />
+    </i:Interaction.Behaviors>
+    <Grid>
+        <Grid.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+            </Style>
+            
+            <Style TargetType="Image">
+                <Setter Property="Margin"   Value="5" />
+            </Style>
+            
+            <Style TargetType="Button">
+                <Setter Property="Width"    Value="80" />
+                <Setter Property="Height"   Value="30" />
+                <Setter Property="Margin"   Value="5" />
+            </Style>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Menu Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Exit" IsEnabled="{op:AuthToEnabled {x:Static a:ACL.CAN_CLOSE}}"></MenuItem>
+            </MenuItem>
+        </Menu>
+        <TextBlock Grid.Column="0" Grid.Row="1">Visibility - Visible (Authorized)</TextBlock>
+        <TextBlock Grid.Column="1" Grid.Row="1">Visibility - Collapse (Unauthorized)</TextBlock>
+        <Image Grid.Column="0" Grid.Row="2" Source="Images/monitor.png" />
+        <Image Grid.Column="1" Grid.Row="2" Source="Images/view.png" Visibility="{op:AuthToVisibility {x:Static a:ACL.CAN_VIEW}}" />
+        <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Command="{Binding CreateCommand}"   CommandParameter="{x:Static a:ACL.CAN_CREATE}">Create</Button>
+            <Button Command="{Binding ReadCommand}"     CommandParameter="{x:Static a:ACL.CAN_READ}">Read</Button>
+            <Button Command="{Binding UpdateCommand}"   CommandParameter="{x:Static a:ACL.CAN_UPDATE}">Update</Button>
+            <Button Command="{Binding DeleteCommand}"   CommandParameter="{x:Static a:ACL.CAN_DELETE}">Delete</Button>
+            <Button Command="{Binding CloseCommand}"    CommandParameter="{x:Static a:ACL.CAN_CLOSE}">Close</Button>
+        </StackPanel>
+    </Grid>
+</Window>
