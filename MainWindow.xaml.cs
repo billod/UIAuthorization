@@ -26,7 +26,7 @@ namespace UIAuthorization
         {
             Login();
             InitializeComponent();
-            DataContext = new MainWindowVM();
+            DataContext = new MainWindowVm();
         }
 
         private void Login()

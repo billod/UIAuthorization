@@ -1,7 +1,6 @@
 using System;
 using System.Windows.Input;
 
-
 namespace UIAuthorization.Commands
 {
     /// <summary>
@@ -57,11 +56,20 @@ namespace UIAuthorization.Commands
             OnCanExecuteChanged();
         }
 
+        /// <summary>
+        /// Achieve interface Execute.
+        /// </summary>
+        /// <param name="parameter"></param>
         void ICommand.Execute(object parameter)
         {
             Execute(parameter);
         }
 
+        /// <summary>
+        /// Achieve interface CanExecute.
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
         bool ICommand.CanExecute(object parameter)
         {
             return CanExecute(parameter);
@@ -73,7 +81,7 @@ namespace UIAuthorization.Commands
         /// <param name="parameter"></param>
         protected void Execute(object parameter)
         {
-            _executeMethod(parameter);  
+            _executeMethod(parameter);
         }
 
         /// <summary>

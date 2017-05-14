@@ -1,23 +1,23 @@
 ﻿using System;
-using System.Linq;
-using System.Text;
-using System.Collections.Generic;
-
-using UIAuthorization.Commands;
 using UIAuthorization.Providers;
-
 
 namespace UIAuthorization.Commands
 {
+    /// <summary>
+    /// Auth command
+    /// </summary>
     public class AuthDelegateCommand : DelegateCommandBase
     {
         public AuthDelegateCommand(Action executeMethod)
-            : base((op) => executeMethod(), (op) => AuthProvider.Instance.CheckAccess(op))
+            : base(op => executeMethod(), op => AuthProvider.Instance.CheckAccess(op))
         {
             if (executeMethod == null)
-                throw new ArgumentNullException("executeMethod");
+                throw new ArgumentNullException(nameof(executeMethod));
         }
 
+        /// <summary>
+        /// overwrite execute
+        /// </summary>
         public void Execute()
         {
             base.Execute(null);
@@ -30,10 +30,10 @@ namespace UIAuthorization.Commands
     public class AuthDelegateCommand<T> : DelegateCommandBase
     {
         public AuthDelegateCommand(Action<T> executeMethod)
-            : base((op) => executeMethod((T)op), (op) => AuthProvider.Instance.CheckAccess(op))
+            : base(op => executeMethod((T)op), op => AuthProvider.Instance.CheckAccess(op))
         {
             if (executeMethod == null)
-                throw new ArgumentNullException("executeMethod");
+                throw new ArgumentNullException(nameof(executeMethod));
 
             Type genericType = typeof(T);
             if (genericType.IsValueType)
@@ -45,11 +45,20 @@ namespace UIAuthorization.Commands
             }
         }
 
+        /// <summary>
+        /// Overwrite canexecute
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
         public bool CanExecute(T parameter)
         {
-            throw new NotSupportedException();
+            return base.CanExecute(parameter);
         }
 
+        /// <summary>
+        /// Overwrite execute
+        /// </summary>
+        /// <param name="parameter"></param>
         public void Execute(T parameter)
         {
             base.Execute(parameter);

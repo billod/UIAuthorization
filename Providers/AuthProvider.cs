@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace UIAuthorization.Providers
+﻿namespace UIAuthorization.Providers
 {
     /// <summary>
     /// Auth Provider

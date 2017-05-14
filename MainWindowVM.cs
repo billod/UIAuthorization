@@ -1,16 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Collections.Generic;
-
 using UIAuthorization.Commands;
 using UIAuthorization.Providers;
 
 namespace UIAuthorization
 {
-    public class MainWindowVM
+    public class MainWindowVm
     {
         private ICommand _createCommand;
         public ICommand CreateCommand
@@ -70,8 +65,8 @@ namespace UIAuthorization
             get
             {
                 return _closingCommand ?? (_closingCommand = new DelegateCommandBase(
-                    (_) => { },
-                    (_) => AuthProvider.Instance.CheckAccess(ACL.CAN_CLOSE)
+                    _ => { },
+                    _ => AuthProvider.Instance.CheckAccess(ACL.CAN_CLOSE)
                 ));
             }
         }
